@@ -10,9 +10,10 @@ var Main = function(game)
     var motionGy;
     var motionGz;
 
-    var MX, MY, MZ;
-    var mx, my, mz;
+    var MX, MY, MZ, MXg, MYg, MZg;
+    var mx, my, mz, mxg, myg, mzg;
     var maxX, minX, maxY, minY, maxZ, minZ;
+    var maxXg, minXg, maxYg, minYg, maxZg, minZg;
 };
 
 Main.prototype = 
@@ -23,12 +24,18 @@ Main.prototype =
 
         gn = new GyroNorm();
 
-        MX = 0;
-        MY = 0;
-        MZ = 0;
-        mx = 0;
-        my = 0;
-        mz = 0;
+        MX  = 0;
+        MY  = 0;
+        MZ  = 0;
+        mx  = 0;
+        my  = 0;
+        mz  = 0;
+        MXg = 0;
+        MYg = 0;
+        MZg = 0;
+        mxg = 0;
+        myg = 0;
+        mzg = 0;
 
         availableText = game.add.text(16, 16, 'Accelerometer', { fontSize: '32px', fill: '#ffff' });
 
@@ -46,6 +53,13 @@ Main.prototype =
         minX = game.add.text(24, 500, 'Min x: ', { fontSize: '40px', fill: '#ffff' });
         minY = game.add.text(24, 550, 'Min y: ', { fontSize: '40px', fill: '#ffff' });
         minZ = game.add.text(24, 600, 'Min Z: ', { fontSize: '40px', fill: '#ffff' });
+
+        maxXg = game.add.text(24, 700,  'Max xg: ', { fontSize: '40px', fill: '#ffff' });
+        maxYg = game.add.text(24, 750,  'Max yg: ', { fontSize: '40px', fill: '#ffff' });
+        maxZg = game.add.text(24, 800,  'Max zg: ', { fontSize: '40px', fill: '#ffff' });
+        minXg = game.add.text(24, 900,  'Min xg: ', { fontSize: '40px', fill: '#ffff' });
+        minYg = game.add.text(24, 950,  'Min yg: ', { fontSize: '40px', fill: '#ffff' });
+        minZg = game.add.text(24, 1000, 'Min zg: ', { fontSize: '40px', fill: '#ffff' });
 
         gn.init().then(function() 
         {
@@ -108,6 +122,33 @@ function gnCallback (data)
         mz = data.dm.z;
     }
 
+
+
+    if (data.dm.gx > MXg)
+    {
+        MXg = data.dm.gx;
+    }
+    else if (data.dm.gx < mxg)
+    {
+        mxg = data.dm.gx;
+    }
+    if (data.dm.gy > MYg)
+    {
+        MYg = data.dm.gy;
+    }
+    else if (data.dm.gy < myg)
+    {
+        myg = data.dm.gy;
+    }
+    if (data.dm.gz > MZg)
+    {
+        MZg = data.dm.gz;
+    }
+    else if (data.dm.gz < mzg)
+    {
+        mzg = data.dm.gz;
+    }
+
     maxX.text = 'Max x: ' + MX;
     maxY.text = 'Max y: ' + MY;
     maxZ.text = 'Max z: ' + MZ;
@@ -115,4 +156,12 @@ function gnCallback (data)
     minX.text = 'Min x: ' + mx;
     minY.text = 'Min y: ' + my;
     minZ.text = 'Min z: ' + mz;
+
+    maxXg.text = 'Max x: ' + MXg;
+    maxYg.text = 'Max y: ' + MYg;
+    maxZg.text = 'Max z: ' + MZg;
+
+    minXg.text = 'Min x: ' + mxg;
+    minYg.text = 'Min y: ' + myg;
+    minZg.text = 'Min z: ' + mzg;
 }
