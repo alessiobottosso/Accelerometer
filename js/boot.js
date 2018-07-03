@@ -9,7 +9,7 @@ Boot.prototype = {
     },
 
     create: function(){
-        this.game.scale.scaleMode = Phaser.ScaleManager.AUTO;
+        this.game.scale.scaleMode = Phaser.ScaleManager.CANVAS;
         //this.scale.setScreenSize(true);
         this.game.state.start("Preload");
     }
