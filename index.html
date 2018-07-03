@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>I Hate Squares</title>
+    <title>Botoman Accelerometer Test App</title>
     <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
     <script type="text/javascript" src="js/gyronorm.complete.js"></script>
     <script type="text/javascript" src="js/boot.js"></script>
@@ -19,7 +19,7 @@
         (function() {
 
                 //Create a new game that fills the screen
-                game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS);
+                game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO);
 
                 //Add all states
                 game.state.add("Boot", Boot);
