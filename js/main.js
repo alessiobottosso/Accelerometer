@@ -20,9 +20,11 @@ Main.prototype =
 {
     create: function() 
     {
+        /*
         var gn;
 
         gn = new GyroNorm();
+        */
 
         MX  = 0;
         MY  = 0;
@@ -61,6 +63,7 @@ Main.prototype =
         minYg = game.add.text(24, 950,  'Min yg: ', { fontSize: '40px', fill: '#ffff' });
         minZg = game.add.text(24, 1000, 'Min zg: ', { fontSize: '40px', fill: '#ffff' });
 
+        /*
         gn.init().then(function() 
         {
             var isAvailable = gn.isAvailable();
@@ -76,6 +79,96 @@ Main.prototype =
                 gn.start(gnCallback);
             }
         })
+        */
+
+        // Standard deviceMotion event
+        if (!window.DeviceMotionEvent) 
+        {
+            availableText.text = 'Accelerometer IS NOT available :(';
+        } 
+        else 
+        {
+            availableText.text = 'Accelerometer IS available :)';
+ 
+            window.addEventListener('devicemotion', function(event) {
+
+                motionX.text = 'Motion x: ' + event.acceleration.x;
+                motionY.text = 'Motion y: ' + event.acceleration.y;
+                motionZ.text = 'Motion z: ' + event.acceleration.z;
+                motionGx.text = 'Motion x + gravity: ' + event.accelerationIncludingGravity.x;
+                motionGy.text = 'Motion y + gravity: ' + event.accelerationIncludingGravity.y;
+                motionGz.text = 'Motion z + gravity: ' + event.accelerationIncludingGravity.z;
+
+                if (event.acceleration.x > MX)
+                {
+                    MX = event.acceleration.x;
+                }
+                else if (event.acceleration.x < mx)
+                {
+                    mx = event.acceleration.x;
+                }
+                if (event.acceleration.y > MY)
+                {
+                    MY = event.acceleration.y;
+                }
+                else if (event.acceleration.y < my)
+                {
+                    my = event.acceleration.y;
+                }
+                if (event.acceleration.z > MZ)
+                {
+                    MZ = event.acceleration.z;
+                }
+                else if (event.acceleration.z < mz)
+                {
+                    mz = event.acceleration.z;
+                }
+
+
+                if (event.accelerationIncludingGravity.x > MXg)
+                {
+                    MXg = event.accelerationIncludingGravity.x;
+                }
+                else if (event.accelerationIncludingGravity.x < mxg)
+                {
+                    mxg = event.accelerationIncludingGravity.x;
+                }
+                if (event.accelerationIncludingGravity.y > MYg)
+                {
+                    MYg = event.accelerationIncludingGravity.y;
+                }
+                else if (event.accelerationIncludingGravity.y < myg)
+                {
+                    myg = event.accelerationIncludingGravity.y;
+                }
+                if (event.accelerationIncludingGravity.z > MZg)
+                {
+                    MZg = event.accelerationIncludingGravity.z;
+                }
+                else if (event.accelerationIncludingGravity.z < mzg)
+                {
+                    mzg = event.accelerationIncludingGravity.z;
+                }
+
+                maxX.text = 'Max x: ' + MX;
+                maxY.text = 'Max y: ' + MY;
+                maxZ.text = 'Max z: ' + MZ;
+
+                minX.text = 'Min x: ' + mx;
+                minY.text = 'Min y: ' + my;
+                minZ.text = 'Min z: ' + mz;
+
+                maxXg.text = 'Max xg: ' + MXg;
+                maxYg.text = 'Max yg: ' + MYg;
+                maxZg.text = 'Max zg: ' + MZg;
+
+                minXg.text = 'Min xg: ' + mxg;
+                minYg.text = 'Min yg: ' + myg;
+                minZg.text = 'Min zg: ' + mzg;
+
+             
+            });
+         }
     },
 
     update: function()
@@ -96,72 +189,4 @@ function gnCallback (data)
     motionGx.text = 'Motion x + gravity: ' + data.dm.gx;
     motionGy.text = 'Motion y + gravity: ' + data.dm.gy;
     motionGz.text = 'Motion z + gravity: ' + data.dm.gz;
-
-    if (data.dm.x > MX)
-    {
-        MX = data.dm.x;
-    }
-    else if (data.dm.x < mx)
-    {
-        mx = data.dm.x;
-    }
-    if (data.dm.y > MY)
-    {
-        MY = data.dm.y;
-    }
-    else if (data.dm.y < my)
-    {
-        my = data.dm.y;
-    }
-    if (data.dm.z > MZ)
-    {
-        MZ = data.dm.z;
-    }
-    else if (data.dm.z < mz)
-    {
-        mz = data.dm.z;
-    }
-
-
-
-    if (data.dm.gx > MXg)
-    {
-        MXg = data.dm.gx;
-    }
-    else if (data.dm.gx < mxg)
-    {
-        mxg = data.dm.gx;
-    }
-    if (data.dm.gy > MYg)
-    {
-        MYg = data.dm.gy;
-    }
-    else if (data.dm.gy < myg)
-    {
-        myg = data.dm.gy;
-    }
-    if (data.dm.gz > MZg)
-    {
-        MZg = data.dm.gz;
-    }
-    else if (data.dm.gz < mzg)
-    {
-        mzg = data.dm.gz;
-    }
-
-    maxX.text = 'Max x: ' + MX;
-    maxY.text = 'Max y: ' + MY;
-    maxZ.text = 'Max z: ' + MZ;
-
-    minX.text = 'Min x: ' + mx;
-    minY.text = 'Min y: ' + my;
-    minZ.text = 'Min z: ' + mz;
-
-    maxXg.text = 'Max x: ' + MXg;
-    maxYg.text = 'Max y: ' + MYg;
-    maxZg.text = 'Max z: ' + MZg;
-
-    minXg.text = 'Min x: ' + mxg;
-    minYg.text = 'Min y: ' + myg;
-    minZg.text = 'Min z: ' + mzg;
 }
